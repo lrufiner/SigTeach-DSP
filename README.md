@@ -1,6 +1,6 @@
 # SigTeach DSP Explorer
 
-![SigTeach: dominio temporal y dominio de frecuencia](docs/assets/readme_banner.webp)
+![SigTeach: dominio temporal, DFT y plano complejo](docs/assets/readme_banner.svg)
 
 **SigTeach DSP Explorer** es una aplicación didáctica interactiva para cursos de
 **Procesamiento Digital de Señales (DSP)**. Reinterpreta la idea del SigTeach
@@ -16,16 +16,13 @@ en 3D y mediante animaciones de acumulación muestra a muestra.
 
 - Banco de señales: seno, coseno, dos tonos, impulso, tren de impulsos, cuadrada,
   chirp, ruido y vocal `/a/` sintética.
-- Carga de CSV de una columna.
-- Carga opcional de WAV.
+- Carga de CSV de una columna y carga opcional de WAV.
 - Definición manual de muestras.
 - Selección de `fs`, inicio de marco, longitud `L`, `NFFT` y ventana.
 - DFT en magnitud/fase y forma rectangular Re/Im.
 - Espectro unilateral, bilateral centrado y eje `0 … fs`.
 - Visualización en plano complejo y forma polar.
-- Exploración de un bin `k` particular.
-- Representación 3D de los vectores complejos y de su suma acumulada.
-- Animación del cálculo de `X[k]`.
+- Exploración de un bin `k` particular con representación 3D y animación.
 - Transformada de Laplace numérica sobre el plano `s = σ + jω`.
 - Heatmaps de magnitud/fase y superficie 3D de `|X(s)|`.
 - Exploración paso a paso de `x(t)e^{-σt}e^{-jωt}` e integral compleja acumulada.
@@ -34,7 +31,7 @@ en 3D y mediante animaciones de acumulación muestra a muestra.
 - Comparación de ventanas y efecto de `NFFT`.
 - Convolución visual y numérica, incluyendo `flip + shift + multiply + sum`.
 - Autocorrelación y correlación cruzada.
-- Pruebas unitarias de DFT, FFT, amplitud, operaciones y mecánica compleja.
+- Suite de pruebas automatizadas.
 
 ## Diseño conceptual
 
@@ -72,11 +69,7 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-También puedes ejecutar:
-
-```powershell
-run_windows.bat
-```
+También puedes ejecutar `run_windows.bat`.
 
 ### Linux/macOS
 
@@ -88,12 +81,7 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-o:
-
-```bash
-chmod +x run_unix.sh
-./run_unix.sh
-```
+o `./run_unix.sh` después de otorgarle permisos de ejecución.
 
 ## Pruebas
 
@@ -123,10 +111,8 @@ SigTeach_DSP/
 
 ## Decisiones didácticas
 
-1. **DFT directa y FFT se separan conceptualmente.** La app usa FFT para
-   interactividad, pero conserva una DFT matricial `O(N²)` para enseñanza.
-2. **Zero-padding no crea resolución física.** Reduce el paso de la grilla
-   `fs/NFFT`, pero no reemplaza una observación temporal más larga.
+1. **DFT directa y FFT se separan conceptualmente.** La app usa FFT para interactividad, pero conserva una DFT matricial `O(N²)` para enseñanza.
+2. **Zero-padding no crea resolución física.** Reduce el paso de la grilla `fs/NFFT`, pero no reemplaza una observación temporal más larga.
 3. **La fase se oculta en bins casi nulos**, donde no es numéricamente estable.
 4. **La amplitud compensa la ganancia coherente de la ventana**.
 5. **La vista 3D implementa literalmente la suma compleja** de un bin DFT.
